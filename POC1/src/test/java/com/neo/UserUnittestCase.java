@@ -28,7 +28,6 @@ class UserUnittestCase {
 		UserEntity user = new UserEntity();
 		user.setFirstName("Rishabh");
 		user.setLastName("Mishra");
-		
 		user.setEmail("rm705400@gmail.com");
 		user.setStatus("NR");
 	    user.setBirthday(LocalDate.EPOCH);

@@ -23,7 +23,6 @@ import com.neo.entity.UserEntity;
 import com.neo.enumm.DOBEnum;
 import com.neo.enumm.DeleteEnum;
 import com.neo.enumm.JoiningDateEnum;
-import com.neo.enumm.StandardDateParser;
 import com.neo.exception.DataNotFoundException;
 import com.neo.service.UserService;
 
@@ -38,6 +37,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserController {
 
+	
+	     
+	
+	
+	
+	
 	@Autowired
 	private UserService userService;
 	/*
@@ -54,20 +59,19 @@ public class UserController {
 	 * view user +filter User
 	 * 
 	 */
-	
-	
+
 	// 5.Update record in DB
-		@PutMapping("/update")
-		public ResponseEntity<String> update(@RequestBody UserEntity User)throws DataNotFoundException {
-			ResponseEntity<String> resp = null;
-			if (User.getId() == null || !userService.isUserExist(User.getId())) {
-				resp = new ResponseEntity<String>("RECORD NOT EXIST IN DB", HttpStatus.BAD_REQUEST);
-			} else {
-				userService.updateUser(User) ;
-				resp = new ResponseEntity<String>("User WITH '" + User.getId() + "' UPDATED", HttpStatus.OK);
-			}
-			return resp;
+	@PutMapping("/update")
+	public ResponseEntity<String> update(@RequestBody UserEntity User) throws DataNotFoundException {
+		ResponseEntity<String> resp = null;
+		if (User.getId() == null || !userService.isUserExist(User.getId())) {
+			resp = new ResponseEntity<String>("RECORD NOT EXIST IN DB", HttpStatus.BAD_REQUEST);
+		} else {
+			userService.updateUser(User);
+			resp = new ResponseEntity<String>("User WITH '" + User.getId() + "' UPDATED", HttpStatus.OK);
 		}
+		return resp;
+	}
 
 	/*
 	 * view user +filter User
@@ -76,9 +80,8 @@ public class UserController {
 	@GetMapping("/all")
 	public ResponseEntity<List<UserEntity>> getAll(@RequestParam(defaultValue = "", required = false) String firstName,
 			@RequestParam(defaultValue = "", required = false) String lastName,
-			@RequestParam(defaultValue = "", required = false) String pincode,
-			DOBEnum dobsorting,JoiningDateEnum joindatesorting
-			) {
+			@RequestParam(defaultValue = "", required = false) String pincode, DOBEnum dobsorting,
+			JoiningDateEnum joindatesorting) {
 
 		List<UserEntity> list = null;
 
@@ -86,7 +89,7 @@ public class UserController {
 		if (flag == false) {
 			list = userService.getAlluserDetailsBasedOnValue(firstName, lastName, pincode);
 		} else {
-			list = userService.getAlluserDetails(dobsorting,joindatesorting);
+			list = userService.getAlluserDetails(dobsorting, joindatesorting);
 		}
 		return new ResponseEntity<List<UserEntity>>(list, HttpStatus.OK);
 	}

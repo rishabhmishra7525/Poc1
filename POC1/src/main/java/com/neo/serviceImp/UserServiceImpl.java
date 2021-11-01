@@ -23,14 +23,11 @@ import com.neo.exception.DataNotFoundException;
 import com.neo.repository.UserRepository;
 import com.neo.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * @author Rishabh Mishra
  *
  */
 @Service
-@Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
