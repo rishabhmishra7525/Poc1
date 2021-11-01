@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import com.neo.enumm.DOBEnum;
 import com.neo.enumm.DeleteEnum;
 import com.neo.enumm.JoiningDateEnum;
 import com.neo.enumm.StandardDateParser;
+import com.neo.exception.DataNotFoundException;
 import com.neo.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +49,25 @@ public class UserController {
 	public UserEntity createUser(@RequestBody UserDTO user) {
 		return userService.save(user);
 	}
+
+	/*
+	 * view user +filter User
+	 * 
+	 */
+	
+	
+	// 5.Update record in DB
+		@PutMapping("/update")
+		public ResponseEntity<String> update(@RequestBody UserEntity User)throws DataNotFoundException {
+			ResponseEntity<String> resp = null;
+			if (User.getId() == null || !userService.isUserExist(User.getId())) {
+				resp = new ResponseEntity<String>("RECORD NOT EXIST IN DB", HttpStatus.BAD_REQUEST);
+			} else {
+				userService.updateUser(User) ;
+				resp = new ResponseEntity<String>("User WITH '" + User.getId() + "' UPDATED", HttpStatus.OK);
+			}
+			return resp;
+		}
 
 	/*
 	 * view user +filter User

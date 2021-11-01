@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
 		UserEntity user = new UserEntity();
 		user.setFirstName(userdto.getFirstName());
 		user.setLastName(userdto.getLastName());
+		user.setEmail(userdto.getEmail());
 		user.setStatus("NR");
 		user.setBirthday(userdto.getBirthday());
 		user.setPinCode(userdto.getPinCode());
@@ -58,7 +59,6 @@ public class UserServiceImpl implements UserService {
 
 		List<UserEntity> userList = new ArrayList<>();
 
-
 		if (dobsorting == null && joindatesorting == null) {
 			userList = repo.findAll();
 			userList = userList.stream().filter(u -> u.getStatus().equals("NR")).collect(Collectors.toList());
@@ -66,10 +66,8 @@ public class UserServiceImpl implements UserService {
 
 		else {
 
-			log.info("----->"+dobsorting);
 			if (!(joindatesorting == null)) {
-				
-				
+
 				String joiningdate = joindatesorting.toString();
 				if (joiningdate.equals("Asc")) {
 					userList = repo.findAllSortingOrderASC();
@@ -122,8 +120,24 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void updateRecords(Integer id) {
 		String define = "Np";
-		repo.updateBy(id, define);
+		repo.updateRecords(id, define);
 
+	}
+
+	@Override
+	public boolean isUserExist(Integer id) {
+		boolean exist = repo.existsById(id);
+
+		return exist;
+	}
+
+	@Override
+	public void updateUser(UserEntity user) throws DataNotFoundException {
+		Optional<UserEntity> opt = repo.findById(user.getId());
+		if (!opt.isPresent()) {
+			throw new DataNotFoundException("User '" + user.getId() + "' Not Found");
+	    }
+		repo.save(user);
 	}
 
 }

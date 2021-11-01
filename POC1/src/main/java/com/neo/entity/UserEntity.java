@@ -14,7 +14,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Entity
 @Table(name="user_details")
+@NoArgsConstructor
 public class UserEntity {
 
 	@Id
@@ -33,12 +36,14 @@ public class UserEntity {
 	private String firstName;
 	@Column(name="last_Name", nullable = false)
 	private String lastName;
+	@Column(name="email", nullable = false)
+	private String email;
 	@Column(name="pin_Code", nullable = false)
 	private String pinCode;
 	
 	private String  status;
 	
-	 @JsonFormat(pattern = "yyyy-MM-dd")
+	 @JsonFormat(pattern = "dd-MM-yyyy")
 	  private LocalDate birthday;
 	
 	 @Column(name = "create_date")
@@ -46,6 +51,8 @@ public class UserEntity {
 
 		@Column(name = "last_update")
 		private Timestamp lastUpdate;
+
+	
 	
 	
 }

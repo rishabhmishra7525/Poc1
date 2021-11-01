@@ -26,12 +26,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	
 	@Modifying
 	@Query(value = "UPDATE user_details SET status=:define  where id =:id ", nativeQuery = true)
-	void updateBy(Integer id, String define);
+	void updateRecords(Integer id, String define);
 
 
-	@Query(value = "SELECT * FROM public.user_details ORDER BY date_joining ASC;", nativeQuery = true)
+	@Query(value = "SELECT * FROM public.user_details ORDER BY create_date ASC;", nativeQuery = true)
 	List<UserEntity> findAllSortingOrderASC();
-	@Query(value = "SELECT * FROM public.user_details ORDER BY date_joining DESC ", nativeQuery = true)
+	@Query(value = "SELECT * FROM public.user_details ORDER BY create_date DESC ", nativeQuery = true)
 	List<UserEntity> findAllSortingOrderDSC();
 
 

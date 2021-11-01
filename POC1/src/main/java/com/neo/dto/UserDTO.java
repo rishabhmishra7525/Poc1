@@ -24,8 +24,9 @@ public class UserDTO {
 	
 	private String firstName;
 	private String lastName;
+	private String email;
 	private String pinCode;
-   @JsonFormat(pattern = "yyyy-MM-dd")
+   @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 	
 }

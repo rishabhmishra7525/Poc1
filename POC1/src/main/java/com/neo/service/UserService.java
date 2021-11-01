@@ -29,6 +29,10 @@ public interface UserService  {
 
 	void updateRecords(Integer id);
 
+	boolean isUserExist(Integer id);
+
+	void updateUser(UserEntity user)throws DataNotFoundException;
+
 
 	
 	
