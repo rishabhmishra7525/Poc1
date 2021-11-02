@@ -1,7 +1,5 @@
 package com.neo.exception;
 
-import java.sql.SQLException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,8 +19,20 @@ public class ExceptionHanding {
 	@ExceptionHandler(value = HttpMessageNotReadableException.class)
 	public String sqlExceptionHandler( Exception ex) {
 		log.info("sqlExceptionHandler -", ex);
-		return "Date Should be fallow some formate";
+		return "Date must be fallow DD/MM/YYYY formate";
 	}
-
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(value = NumberFormatException.class)
+	public String numberFormateException( Exception ex) {
+		log.info("sqlExceptionHandler -", ex);
+		return "Number formate ";
+	}
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(value = NullPointerException.class)
+	public String nullFormateException( Exception ex) {
+		log.info("sqlExceptionHandler -", ex);
+		return "Null Pointer Exception";
+	}
+	
 	
 }
